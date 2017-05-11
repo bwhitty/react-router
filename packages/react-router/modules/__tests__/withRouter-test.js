@@ -1,16 +1,19 @@
 import expect from 'expect'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { h, render } from 'preact'
+
 import MemoryRouter from '../MemoryRouter'
 import StaticRouter from '../StaticRouter'
 import Route from '../Route'
 import withRouter from '../withRouter'
 
+const Noop = () => null
+
 describe('withRouter', () => {
   const node = document.createElement('div')
 
   afterEach(() => {
-    ReactDOM.unmountComponentAtNode(node)
+    // TODO https://github.com/developit/preact/issues/53
+    render(<Noop />, document.body, node)
   })
 
   it('provides { match, location, history } props', () => {
@@ -21,7 +24,7 @@ describe('withRouter', () => {
       return null
     })
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/bubblegum' ]}>
         <Route path="/bubblegum" render={() => (
           <PropsChecker/>
@@ -37,7 +40,7 @@ describe('withRouter', () => {
       return null
     })
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/bubblegum' ]}>
         <Route path="/:flavor" render={({ match }) => {
           parentMatch = match
@@ -57,7 +60,7 @@ describe('withRouter', () => {
 
       const context = {}
 
-      ReactDOM.render((
+      render((
         <StaticRouter context={context}>
           <Route component={PropsChecker}/>
         </StaticRouter>
@@ -72,7 +75,7 @@ describe('withRouter', () => {
   })
 
   it('exposes the instance of the wrapped component via wrappedComponentRef', () => {
-    class WrappedComponent extends React.Component {
+    class WrappedComponent extends Component {
       render() {
         return null
       }
@@ -80,7 +83,7 @@ describe('withRouter', () => {
     const Component = withRouter(WrappedComponent)
 
     let ref
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/bubblegum' ]}>
         <Route path="/bubblegum" render={() => (
           <Component wrappedComponentRef={r => ref = r}/>
@@ -92,7 +95,7 @@ describe('withRouter', () => {
   })
 
   it('hoists non-react statics from the wrapped component', () => {
-    class Component extends React.Component {
+    class Component extends Component {
       static foo() {
         return 'bar'
       }

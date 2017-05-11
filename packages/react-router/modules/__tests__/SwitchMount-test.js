@@ -1,6 +1,6 @@
 import expect from 'expect'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { Component, h, render } from 'preact'
+
 import createHistory from 'history/createMemoryHistory'
 import Router from '../Router'
 import Switch from '../Switch'
@@ -12,7 +12,7 @@ describe('A <Switch>', () => {
 
     let mountCount = 0
 
-    class App extends React.Component {
+    class App extends Component {
       componentWillMount() {
         mountCount++
       }
@@ -26,7 +26,7 @@ describe('A <Switch>', () => {
       initialEntries: [ '/one' ]
     })
 
-    ReactDOM.render((
+    render((
       <Router history={history}>
         <Switch>
           <Route path="/one" component={App}/>

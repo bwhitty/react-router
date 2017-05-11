@@ -1,6 +1,6 @@
 import expect from 'expect'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { h, render } from 'preact'
+
 import MemoryRouter from '../MemoryRouter'
 import Switch from '../Switch'
 import Route from '../Route'
@@ -10,7 +10,7 @@ describe('A <Switch>', () => {
   it('renders the first <Route> that matches the URL', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/one' ]}>
         <Switch>
           <Route path="/one" render={() => (
@@ -29,7 +29,7 @@ describe('A <Switch>', () => {
   it('renders the first <Redirect from> that matches the URL', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/three' ]}>
         <Switch>
           <Route path="/one" render={() => (
@@ -50,7 +50,7 @@ describe('A <Switch>', () => {
   it('does not render a second <Route> or <Redirect> that also matches the URL', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/one' ]}>
         <Switch>
           <Route path="/one" render={() => (
@@ -73,7 +73,7 @@ describe('A <Switch>', () => {
   it('renders pathless Routes', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/cupcakes' ]}>
         <Switch>
           <Route path="/bubblegum" render={() => <div>one</div>}/>
@@ -89,7 +89,7 @@ describe('A <Switch>', () => {
   it('handles from-less Redirects', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/cupcakes' ]}>
         <Switch>
           <Route path="/bubblegum" render={() => <div>bub</div>}/>
@@ -106,7 +106,7 @@ describe('A <Switch>', () => {
   it('handles comments', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/cupcakes' ]}>
         <Switch>
           <Route path="/bubblegum" render={() => <div>bub</div>}/>
@@ -123,7 +123,7 @@ describe('A <Switch>', () => {
   it('renders with non-element children', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/one' ]}>
         <Switch>
           <Route path="/one" render={() => (<h1>one</h1>)}/>
@@ -142,7 +142,7 @@ describe('A <Switch location>', () => {
   it('can use a `location` prop instead of `router.location`', () => {
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/one' ]}>
         <Switch location={{ pathname: '/two' }}>
           <Route path="/one" render={() => <h1>one</h1>}/>
@@ -165,7 +165,7 @@ describe('A <Switch location>', () => {
       }
 
       const switchLocation = { pathname: '/two' }
-      ReactDOM.render((
+      render((
         <MemoryRouter initialEntries={[ '/one' ]}>
           <Switch location={switchLocation}>
             <Route path="/one" render={() => <h1>one</h1>}/>

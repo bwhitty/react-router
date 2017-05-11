@@ -1,7 +1,7 @@
 import expect from 'expect'
-import React from 'react'
+import { h, render } from 'preact'
 import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
+
 import MemoryRouter from '../MemoryRouter'
 
 describe('A <MemoryRouter>', () => {
@@ -18,7 +18,7 @@ describe('A <MemoryRouter>', () => {
 
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter>
         <ContextChecker/>
       </MemoryRouter>

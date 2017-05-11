@@ -1,8 +1,8 @@
 import expect from 'expect'
-import React from 'react'
+import { h } from 'preact'
+import render from 'preact-render-to-string'
 import PropTypes from 'prop-types'
-import ReactDOMServer from 'react-dom/server'
-import ReactDOM from 'react-dom'
+
 import StaticRouter from '../StaticRouter'
 import Redirect from '../Redirect'
 import Route from '../Route'
@@ -22,7 +22,7 @@ describe('A <StaticRouter>', () => {
 
     const context = {}
 
-    ReactDOMServer.renderToStaticMarkup(
+    render(
       <StaticRouter context={context}>
         <Route component={ContextChecker}/>
       </StaticRouter>
@@ -42,7 +42,7 @@ describe('A <StaticRouter>', () => {
 
     const context = {}
 
-    ReactDOMServer.renderToStaticMarkup(
+    render(
       <StaticRouter context={context}>
         <Route component={ContextChecker}/>
       </StaticRouter>
@@ -61,7 +61,7 @@ describe('A <StaticRouter>', () => {
 
     const context = {}
 
-    ReactDOMServer.renderToStaticMarkup(
+    render(
       <StaticRouter context={context}>
         <ContextChecker/>
       </StaticRouter>
@@ -71,7 +71,7 @@ describe('A <StaticRouter>', () => {
   it('reports PUSH actions on the context object', () => {
     const context = {}
 
-    ReactDOMServer.renderToStaticMarkup(
+    render(
       <StaticRouter context={context}>
         <Redirect push to="/somewhere-else"/>
       </StaticRouter>
@@ -84,7 +84,7 @@ describe('A <StaticRouter>', () => {
   it('reports REPLACE actions on the context object', () => {
     const context = {}
 
-    ReactDOMServer.renderToStaticMarkup(
+    render(
       <StaticRouter context={context}>
         <Redirect to="/somewhere-else"/>
       </StaticRouter>
@@ -97,7 +97,7 @@ describe('A <StaticRouter>', () => {
   it('knows how to serialize location objects', () => {
     const context = {}
 
-    ReactDOMServer.renderToStaticMarkup(
+    render(
       <StaticRouter context={context}>
         <Redirect to={{ pathname: '/somewhere-else' }}/>
       </StaticRouter>
@@ -122,7 +122,7 @@ describe('A <StaticRouter>', () => {
 
     const context = {}
 
-    ReactDOMServer.renderToStaticMarkup(
+    render(
       <StaticRouter context={context} location="/the/path?the=query#the-hash">
         <Route component={LocationChecker}/>
       </StaticRouter>
@@ -140,7 +140,7 @@ describe('A <StaticRouter>', () => {
 
       const context = {}
 
-      ReactDOMServer.renderToStaticMarkup(
+      render(
         <StaticRouter context={context} basename="/the-base" location="/the-base/path">
           <Route component={LocationChecker}/>
         </StaticRouter>
@@ -150,7 +150,7 @@ describe('A <StaticRouter>', () => {
     it('reports PUSH actions on the context object', () => {
       const context = {}
 
-      ReactDOMServer.renderToStaticMarkup(
+      render(
         <StaticRouter context={context} basename="/the-base">
           <Redirect push to="/somewhere-else"/>
         </StaticRouter>
@@ -163,7 +163,7 @@ describe('A <StaticRouter>', () => {
     it('reports REPLACE actions on the context object', () => {
       const context = {}
 
-      ReactDOMServer.renderToStaticMarkup(
+      render(
         <StaticRouter context={context} basename="/the-base">
           <Redirect to="/somewhere-else"/>
         </StaticRouter>
@@ -186,7 +186,7 @@ describe('A <StaticRouter>', () => {
         )} />
       )
 
-      ReactDOM.render((
+      render((
         <StaticRouter context={context}>
           <Link to={pathname} />
         </StaticRouter>
@@ -203,7 +203,7 @@ describe('A <StaticRouter>', () => {
       const node = document.createElement('div')
 
       expect(() => {
-        ReactDOM.render((
+        render((
           <StaticRouter context={context}>
             <Prompt message="this is only a test"/>
           </StaticRouter>

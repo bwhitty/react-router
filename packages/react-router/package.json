@@ -69,6 +69,7 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^2.5.3",
     "preact": "^8.1.0",
+    "preact-render-to-string": "^3.6.1",
     "pretty-bytes": "^3.0.1",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",

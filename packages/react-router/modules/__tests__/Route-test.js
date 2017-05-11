@@ -1,17 +1,19 @@
 import expect from 'expect'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { h, render } from 'preact'
+
 import MemoryRouter from '../MemoryRouter'
 import Router from '../Router'
 import createMemoryHistory from 'history/createMemoryHistory'
 import Route from '../Route'
+
+const Noop = () => null
 
 describe('A <Route>', () => {
   it('renders at the root', () => {
     const TEXT = 'Mrs. Kato'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/' ]}>
         <Route path="/" render={() => (
           <h1>{TEXT}</h1>
@@ -26,7 +28,7 @@ describe('A <Route>', () => {
     const TEXT = 'bubblegum'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/bunnies' ]}>
         <Route path="/flowers" render={() => (
           <h1>{TEXT}</h1>
@@ -41,7 +43,7 @@ describe('A <Route>', () => {
     const TEXT = 'tamarind chutney'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/mint' ]}>
         <Route
           location={{ pathname: '/tamarind' }}
@@ -60,7 +62,7 @@ describe('A <Route>', () => {
     const TEXT = 'Mrs. Kato'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/' ]}>
         <Route path="/" render={() => (
           <h1>{TEXT}</h1>
@@ -77,7 +79,7 @@ describe('A <Route>', () => {
     const node = document.createElement('div')
 
     let push
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/sushi/california' ]}>
         <Route path="/sushi/:roll" render={({ history, match }) => {
           push = history.push
@@ -93,7 +95,7 @@ describe('A <Route>', () => {
 describe('A <Route> with dynamic segments in the path', () => {
   it('decodes them', () => {
     const node = document.createElement('div')
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/a%20dynamic%20segment' ]}>
         <Route path="/:id" render={({ match }) => <div>{match.params.id}</div>} />
       </MemoryRouter>
@@ -106,7 +108,7 @@ describe('A <Route> with dynamic segments in the path', () => {
 describe('A unicode <Route>', () => {
   it('is able to match', () => {
     const node = document.createElement('div')
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/パス名' ]}>
         <Route path="/パス名" render={({ match }) => <div>{match.url}</div>} />
       </MemoryRouter>
@@ -121,13 +123,14 @@ describe('<Route render>', () => {
   const node = document.createElement('div')
 
   afterEach(() => {
-    ReactDOM.unmountComponentAtNode(node)
+    // TODO https://github.com/developit/preact/issues/53
+    render(<Noop />, document.body, node)
   })
 
   it('renders its return value', () => {
     const TEXT = 'Mrs. Kato'
     const node = document.createElement('div')
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/' ]}>
         <Route path="/" render={() => <div>{TEXT}</div>} />
       </MemoryRouter>
@@ -139,7 +142,7 @@ describe('<Route render>', () => {
   it('receives { match, location, history } props', () => {
     let actual = null
 
-    ReactDOM.render((
+    render((
       <Router history={history}>
         <Route path="/" render={props => (actual = props) && null}/>
       </Router>
@@ -156,14 +159,15 @@ describe('<Route component>', () => {
   const node = document.createElement('div')
 
   afterEach(() => {
-    ReactDOM.unmountComponentAtNode(node)
+    // TODO https://github.com/developit/preact/issues/53
+    render(<Noop />, document.body, node)
   })
 
   it('renders the component', () => {
     const TEXT = 'Mrs. Kato'
     const node = document.createElement('div')
     const Home = () => <div>{TEXT}</div>
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/' ]}>
         <Route path="/" component={Home} />
       </MemoryRouter>
@@ -176,7 +180,7 @@ describe('<Route component>', () => {
     let actual = null
     const Component = (props) => (actual = props) && null
 
-    ReactDOM.render((
+    render((
       <Router history={history}>
         <Route path="/" component={Component}/>
       </Router>
@@ -193,13 +197,14 @@ describe('<Route children>', () => {
   const node = document.createElement('div')
 
   afterEach(() => {
-    ReactDOM.unmountComponentAtNode(node)
+    // TODO https://github.com/developit/preact/issues/53
+    render(<Noop />, document.body, node)
   })
 
   it('renders a function', () => {
     const TEXT = 'Mrs. Kato'
     const node = document.createElement('div')
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/' ]}>
         <Route path="/" children={() => <div>{TEXT}</div>} />
       </MemoryRouter>
@@ -211,7 +216,7 @@ describe('<Route children>', () => {
   it('renders a child element', () => {
     const TEXT = 'Mrs. Kato'
     const node = document.createElement('div')
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/' ]}>
         <Route path="/">
           <div>{TEXT}</div>
@@ -225,7 +230,7 @@ describe('<Route children>', () => {
   it('receives { match, location, history } props', () => {
     let actual = null
 
-    ReactDOM.render((
+    render((
       <Router history={history}>
         <Route path="/" children={props => (actual = props) && null}/>
       </Router>
@@ -242,7 +247,7 @@ describe('A <Route exact>', () => {
     const TEXT = 'bubblegum'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/somepath/' ]}>
         <Route exact path="/somepath" render={() => (
           <h1>{TEXT}</h1>
@@ -257,7 +262,7 @@ describe('A <Route exact>', () => {
     const TEXT = 'bubblegum'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/somepath' ]}>
         <Route exact path="/somepath/" render={() => (
           <h1>{TEXT}</h1>
@@ -274,7 +279,7 @@ describe('A <Route exact strict>', () => {
     const TEXT = 'bubblegum'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/somepath/' ]}>
         <Route exact strict path="/somepath" render={() => (
           <h1>{TEXT}</h1>
@@ -289,7 +294,7 @@ describe('A <Route exact strict>', () => {
     const TEXT = 'bubblegum'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/somepath' ]}>
         <Route exact strict path="/somepath/" render={() => (
           <h1>{TEXT}</h1>
@@ -306,7 +311,7 @@ describe('A <Route location>', () => {
     const TEXT = 'tamarind chutney'
     const node = document.createElement('div')
 
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/mint' ]}>
         <Route
           location={{ pathname: '/tamarind' }}
@@ -326,7 +331,7 @@ describe('A <Route location>', () => {
       const TEXT = 'cheddar pretzel'
       const node = document.createElement('div')
 
-      ReactDOM.render((
+      render((
         <MemoryRouter initialEntries={[ '/popcorn' ]}>
           <Route
             location={{ pathname: '/pretzels/cheddar' }}
@@ -342,12 +347,12 @@ describe('A <Route location>', () => {
 
       expect(node.innerHTML).toContain(TEXT)
     })
-    
+
     it('continues to use parent\'s prop location after navigation', () => {
       const TEXT = 'cheddar pretzel'
       const node = document.createElement('div')
       let push
-      ReactDOM.render((
+      render((
         <MemoryRouter initialEntries={[ '/popcorn' ]}>
           <Route
             location={{ pathname: '/pretzels/cheddar' }}

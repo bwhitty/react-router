@@ -1,21 +1,24 @@
 import expect from 'expect'
-import React from 'react'
+import { h, render } from 'preact'
 import PropTypes from 'prop-types'
 import Router from '../Router'
-import ReactDOM from 'react-dom'
+
 import createHistory from 'history/createMemoryHistory'
+
+const Noop = () => null
 
 describe('A <Router>', () => {
   const node = document.createElement('div')
 
   afterEach(() => {
-    ReactDOM.unmountComponentAtNode(node)
+    // TODO https://github.com/developit/preact/issues/53
+    render(<Noop />, document.body, node)
   })
 
   describe('when it has more than one child', () => {
     it('throws an error explaining a Router may have only one child', () => {
       expect(() => {
-        ReactDOM.render(
+        render(
           <Router history={createHistory()}>
             <p>Foo</p>
             <p>Bar</p>
@@ -29,7 +32,7 @@ describe('A <Router>', () => {
   describe('with exactly one child', () => {
     it('does not throw an error', () => {
       expect(() => {
-        ReactDOM.render(
+        render(
           <Router history={createHistory()}>
             <p>Bar</p>
           </Router>,
@@ -42,7 +45,7 @@ describe('A <Router>', () => {
   describe('with no children', () => {
     it('does not throw an error', () => {
       expect(() => {
-        ReactDOM.render(
+        render(
           <Router history={createHistory()} />,
           node
         )
@@ -70,7 +73,7 @@ describe('A <Router>', () => {
 
     it('puts history on context.history', () => {
       const history = createHistory()
-      ReactDOM.render(
+      render(
         <Router history={history}>
           <ContextChecker />
         </Router>,
@@ -85,7 +88,7 @@ describe('A <Router>', () => {
         initialEntries: ['/']
       })
 
-      ReactDOM.render(
+      render(
         <Router history={history}>
           <ContextChecker/>
         </Router>,
@@ -104,7 +107,7 @@ describe('A <Router>', () => {
         initialEntries: [ '/' ]
       })
 
-      ReactDOM.render(
+      render(
         <Router history={history}>
           <ContextChecker />
         </Router>,
@@ -124,7 +127,7 @@ describe('A <Router>', () => {
         initialEntries: [ '/' ]
       })
 
-      ReactDOM.render(
+      render(
         <Router history={history}>
           <ContextChecker />
         </Router>,

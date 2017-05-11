@@ -1,6 +1,6 @@
 import expect from 'expect'
-import React from 'react'
-import ReactDOM from 'react-dom'
+import { h, render } from 'preact'
+
 import MemoryRouter from '../MemoryRouter'
 import Route from '../Route'
 
@@ -9,7 +9,7 @@ describe('Integration Tests', () => {
     const node = document.createElement('div')
     const TEXT1 = 'Ms. Tripp'
     const TEXT2 = 'Mrs. Schiffman'
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/nested' ]}>
         <Route path="/" render={() => (
           <div>
@@ -29,7 +29,7 @@ describe('Integration Tests', () => {
     const node = document.createElement('div')
     const TEXT1 = 'Ms. Tripp'
     const TEXT2 = 'Mrs. Schiffman'
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/' ]}>
         <Route path="/" render={() => (
           <div>
@@ -49,7 +49,7 @@ describe('Integration Tests', () => {
     const node = document.createElement('div')
     const TEXT1 = 'Mrs. Schiffman'
     const TEXT2 = 'Mrs. Burton'
-    ReactDOM.render((
+    render((
       <MemoryRouter initialEntries={[ '/double' ]}>
         <div>
           <aside>
