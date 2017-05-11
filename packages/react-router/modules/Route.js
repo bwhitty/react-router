@@ -1,12 +1,12 @@
 import warning from 'warning'
-import React from 'react'
+import { Component, createElement, h } from 'preact'
 import PropTypes from 'prop-types'
 import matchPath from './matchPath'
 
 /**
  * The public API for matching a single path and rendering.
  */
-class Route extends React.Component {
+class Route extends Component {
   static propTypes = {
     computedMatch: PropTypes.object, // private, from <Switch>
     path: PropTypes.string,
@@ -33,6 +33,14 @@ class Route extends React.Component {
     router: PropTypes.object.isRequired
   }
 
+  constructor() {
+    super();
+
+    this.state = {
+      match: this.computeMatch(this.props, this.context.router)
+    }
+  }
+
   getChildContext() {
     return {
       router: {
@@ -43,10 +51,6 @@ class Route extends React.Component {
         }
       }
     }
-  }
-
-  state = {
-    match: this.computeMatch(this.props, this.context.router)
   }
 
   computeMatch({ computedMatch, location, path, strict, exact }, { route }) {
@@ -63,17 +67,18 @@ class Route extends React.Component {
 
     warning(
       !(component && render),
-      'You should not use <Route component> and <Route render> in the same route; <Route render> will be ignored'   
+      'You should not use <Route component> and <Route render> in the same route; <Route render> will be ignored'
     )
 
+    // FIXME this warning gets thrown when running preact because children is always populated
     warning(
       !(component && children),
-      'You should not use <Route component> and <Route children> in the same route; <Route children> will be ignored'   
+      'You should not use <Route component> and <Route children> in the same route; <Route children> will be ignored'
     )
 
     warning(
       !(render && children),
-      'You should not use <Route render> and <Route children> in the same route; <Route children> will be ignored'    
+      'You should not use <Route render> and <Route children> in the same route; <Route children> will be ignored'
     )
   }
 
@@ -102,14 +107,15 @@ class Route extends React.Component {
 
     return (
       component ? ( // component prop gets first priority, only called if there's a match
-        match ? React.createElement(component, props) : null
+        match ? createElement(component, props) : null
       ) : render ? ( // render prop is next, only called if there's a match
         match ? render(props) : null
       ) : children ? ( // children come last, always called
         typeof children === 'function' ? (
           children(props)
         ) : !Array.isArray(children) || children.length ? ( // Preact defaults to empty children array
-          React.Children.only(children)
+          // FIXME same issue as the Router; preact has multiple children?
+          children ? children[0] : null
         ) : (
           null
         )

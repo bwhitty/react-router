@@ -1,11 +1,11 @@
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 
 /**
  * The public API for updating the location programatically
  * with a component.
  */
-class Redirect extends React.Component {
+class Redirect extends Component {
   static propTypes = {
     push: PropTypes.bool,
     from: PropTypes.string,

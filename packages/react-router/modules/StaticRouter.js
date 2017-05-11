@@ -1,5 +1,5 @@
 import invariant from 'invariant'
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 import { addLeadingSlash, createPath, parsePath } from 'history/PathUtils'
 import Router from './Router'
@@ -61,7 +61,7 @@ const noop = () => {}
  * location changes in a context object. Useful mainly in testing and
  * server-rendering scenarios.
  */
-class StaticRouter extends React.Component {
+class StaticRouter extends Component {
   static propTypes = {
     basename: PropTypes.string,
     context: PropTypes.object.isRequired,

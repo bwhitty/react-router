@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component, cloneElement, h } from 'preact'
 import PropTypes from 'prop-types'
 import warning from 'warning'
 import matchPath from './matchPath'
@@ -6,7 +6,7 @@ import matchPath from './matchPath'
 /**
  * The public API for rendering the first <Route> that matches.
  */
-class Switch extends React.Component {
+class Switch extends Component {
   static contextTypes = {
     router: PropTypes.shape({
       route: PropTypes.object.isRequired
@@ -36,8 +36,9 @@ class Switch extends React.Component {
     const location = this.props.location || route.location
 
     let match, child
-    React.Children.forEach(children, element => {
-      if (!React.isValidElement(element)) return
+    children.forEach(children, element => {
+      // FIXME can we add our own check here? preact/debug package FTW?
+      // if (!React.isValidElement(element)) return
 
       const { path: pathProp, exact, strict, from } = element.props
       const path = pathProp || from
@@ -48,7 +49,7 @@ class Switch extends React.Component {
       }
     })
 
-    return match ? React.cloneElement(child, { location, computedMatch: match }) : null
+    return match ? cloneElement(child, { location, computedMatch: match }) : null
   }
 }
 

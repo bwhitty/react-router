@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 import createHistory from 'history/createBrowserHistory'
 import { Router } from 'react-router'
@@ -6,7 +6,7 @@ import { Router } from 'react-router'
 /**
  * The public API for a <Router> that uses HTML5 history.
  */
-class BrowserRouter extends React.Component {
+class BrowserRouter extends Component {
   static propTypes = {
     basename: PropTypes.string,
     forceRefresh: PropTypes.bool,

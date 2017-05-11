@@ -1,11 +1,11 @@
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 
 /**
  * The public API for prompting the user before navigating away
  * from a screen with a component.
  */
-class Prompt extends React.Component {
+class Prompt extends Component {
   static propTypes = {
     when: PropTypes.bool,
     message: PropTypes.oneOfType([

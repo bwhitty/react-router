@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 
 const isModifiedEvent = (event) =>
@@ -7,7 +7,7 @@ const isModifiedEvent = (event) =>
 /**
  * The public API for rendering a history-aware <a>.
  */
-class Link extends React.Component {
+class Link extends Component {
   static propTypes = {
     onClick: PropTypes.func,
     target: PropTypes.string,
