@@ -33,11 +33,11 @@ class Route extends Component {
     router: PropTypes.object.isRequired
   }
 
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context)
 
     this.state = {
-      match: this.computeMatch(this.props, this.context.router)
+      match: this.computeMatch(props, context.router)
     }
   }
 
