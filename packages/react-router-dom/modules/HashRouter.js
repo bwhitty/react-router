@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 import createHistory from 'history/createHashHistory'
 import { Router } from 'react-router'
@@ -6,7 +6,7 @@ import { Router } from 'react-router'
 /**
  * The public API for a <Router> that uses window.location.hash.
  */
-class HashRouter extends React.Component {
+class HashRouter extends Component {
   static propTypes = {
     basename: PropTypes.string,
     getUserConfirmation: PropTypes.func,

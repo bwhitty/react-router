@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 import createHistory from 'history/createMemoryHistory'
 import Router from './Router'
@@ -6,7 +6,7 @@ import Router from './Router'
 /**
  * The public API for a <Router> that stores location in memory.
  */
-class MemoryRouter extends React.Component {
+class MemoryRouter extends Component {
   static propTypes = {
     initialEntries: PropTypes.array,
     initialIndex: PropTypes.number,

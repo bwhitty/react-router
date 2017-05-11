@@ -1,12 +1,12 @@
 import warning from 'warning'
 import invariant from 'invariant'
-import React from 'react'
+import { Component, h } from 'preact'
 import PropTypes from 'prop-types'
 
 /**
  * The public API for putting history on context.
  */
-class Router extends React.Component {
+class Router extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     children: PropTypes.node
@@ -49,10 +49,11 @@ class Router extends React.Component {
   componentWillMount() {
     const { children, history } = this.props
 
-    invariant(
-      children == null || React.Children.count(children) === 1,
-      'A <Router> may have only one child element'
-    )
+    // FIXME not sure what to do about this one
+    // invariant(
+    //   children == null || React.Children.count(children) === 1,
+    //   'A <Router> may have only one child element'
+    // )
 
     // Do this here so we can setState when a <Redirect> changes the
     // location in componentWillMount. This happens e.g. when doing
@@ -77,7 +78,8 @@ class Router extends React.Component {
 
   render() {
     const { children } = this.props
-    return children ? React.Children.only(children) : null
+    // FIXME preact can have multiple children, how shall that be handled?
+    return children ? children[0] : null
   }
 }
 
